@@ -1,0 +1,110 @@
+<!-- 自定义元素 -->
+<!-- 消息列表容器 -->
+<template id="message-holder-template">
+    <div style="display: flex; flex-direction: column; justify-content: flex-end; /* align-items: center */; padding-top: 10px; padding-bottom: 14px;"
+        id="holder">
+        <slot name="top" part="top">
+        </slot>
+        <!-- 默认槽位 如果没有 内部嵌套元素将不会被渲染 -->
+        <slot>
+        </slot>
+    </div>
+</template>
+<!-- 普通消息 -->
+<template id="message-normal-template">
+    <style>
+        /* 精准指针设备 令桌面端 */
+        @media (pointer: fine) {
+            #_direction_3 {
+                max-width: 50%;
+            }
+        }
+
+        /* 不精准指针设备 令移动端 */
+        @media (pointer: coarse) {
+            #_direction_3 {
+                max-width: 77%;
+            }
+        }
+    </style>
+    <div style="display: none;" id="sender-id">
+    </div>
+    <div id="_direction_1" slot="trigger"
+        style="width: 100%; display: flex; justify-content: flex-start; flex-direction: column;">
+        <div id="_direction_2" style="display: flex; justify-content: flex-start;">
+            <span style="align-self: center; font-size: 90%;" id="sender-name-left">
+            </span>
+            <mdui-avatar style="width: 43px; height: 43px; margin: 11px;" id="avatar">
+            </mdui-avatar>
+            <span style="align-self: center; font-size: 90%;" id="sender-name-right">
+            </span>
+        </div>
+        <mdui-card id="_direction_3" variant="elevated"
+            style="min-width: 0%; margin-left: 55px; margin-top: -5px; padding: 15px; align-self: flex-start;">
+            <span id="msg" style="font-size: 94%;">
+                <slot>
+                </slot>
+            </span>
+        </mdui-card>
+    </div>
+</template>
+<!-- 系统消息 -->
+<template id="message-system-template">
+    <style>
+        /* 精准指针设备 令桌面端 */
+        @media (pointer: fine) {
+            #msg {
+                max-width: 50%;
+                font-size: 94%;
+            }
+        }
+
+        /* 不精准指针设备 令移动端 */
+        @media (pointer: coarse) {
+            #msg {
+                max-width: 90%;
+                font-size: 90%;
+            }
+        }
+    </style>
+    <div style="width: 100%; flex-direction: column; display: flex; margin-top: 25px; margin-bottom: 20px;">
+        <mdui-card variant="filled" id="msg"
+            style="align-self: center; padding-top: 9px; padding-bottom: 9px; padding-left: 18px; padding-right: 18px; font-size: 92%;">
+            <slot>
+            </slot>
+        </mdui-card>
+    </div>
+</template>
+<!-- 普通消息 -->
+<template id="message-normal-template">
+    <div style="display: none;" id="sender-id">
+    </div>
+    <div id="_direction_1" slot="trigger"
+        style="width: 100%; display: flex; justify-content: flex-start; flex-direction: column;">
+        <div id="_direction_2" style="display: flex; justify-content: flex-start;">
+            <span style="align-self: center; font-size: 90%;" id="sender-name-left">
+            </span>
+            <mdui-avatar style="width: 43px; height: 43px; margin: 11px;" id="avatar">
+            </mdui-avatar>
+            <span style="align-self: center; font-size: 90%;" id="sender-name-right">
+            </span>
+        </div>
+        <mdui-card id="_direction_3" variant="elevated"
+            style="max-width: 80%; min-width: 0%; margin-left: 55px; margin-top: -5px; padding: 15px; align-self: flex-start;">
+            <span id="msg">
+                <slot>
+                </slot>
+            </span>
+        </mdui-card>
+    </div>
+</template>
+<!-- 系统消息 -->
+<template id="message-system-template">
+    <div style="width: 100%; flex-direction: column; display: flex; margin-top: 25px; margin-bottom: 20px;">
+        <mdui-card variant="filled" id="msg"
+            style="max-width: 90%; align-self: center; padding-top: 9px; padding-bottom: 9px; padding-left: 18px; padding-right: 18px; font-size: 92%;">
+            <slot>
+            </slot>
+        </mdui-card>
+    </div>
+</template>
