@@ -1,7 +1,7 @@
-// todo: 写成promise
-let template_id = 'message-view-template'
-$(document.body).append($.parseHTML(`<div id="${template_id}"></div>`))
-$('#' + template_id).load('message-view-template.html')
+import loadTemplate from './template-loader.js'
+import openImageViewerDialog from './image-viewer-dialog.js'
+
+await loadTemplate('message-view-template')
 
 class MessageNormal extends HTMLElement {
     static observedAttributes = ['avatar', 'sender-name', 'sender-id', 'msg', 'direction']
@@ -118,7 +118,7 @@ customElements.define('message-img', class extends HTMLElement {
             $(this).attr('alt', '图像损坏')
         }
         e.onclick = () => {
-            import('image-viewer-dialog.js').then((m) => m.default($(this).attr('src')))
+            openImageViewerDialog($(this).attr('src'))
         }
         this.appendChild(e)
     }

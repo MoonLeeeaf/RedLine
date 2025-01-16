@@ -8,8 +8,11 @@
 
     <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css">
     <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/GoogleChromeLabs/pinch-zoom@1.1.1/dist/pinch-zoom-min.js"></script>
 
     <title>RedLine</title>
 
@@ -19,9 +22,32 @@
             padding: 0;
         }
     </style>
+    <link href="scroll-bar.css" rel="stylesheet" />
 </head>
 
 <body style="height: 100%;">
+    <script src="auto-window-size.js"></script>
+
+    <mdui-top-app-bar style="position: fixed; top: 0;"
+        id="input_toolbar">
+        <mdui-button-icon icon="menu"></mdui-button-icon>
+        <mdui-top-app-bar-title>院审</mdui-top-app-bar-title>
+        <div style="flex-grow: 1">
+        </div>
+        <mdui-dropdown trigger="hover">
+            <mdui-button-icon icon="more_vert" slot="trigger">
+            </mdui-button-icon>
+            <mdui-menu>
+                <mdui-menu-item>资料<mdui-icon slot="icon" name="info">
+                    </mdui-icon>
+                </mdui-menu-item>
+                <mdui-menu-item>设置<mdui-icon slot="icon" name="settings">
+                    </mdui-icon>
+                </mdui-menu-item>
+            </mdui-menu>
+        </mdui-dropdown>
+    </mdui-top-app-bar>
+
     <message-holder style="height: 100%;">
         <mdui-button variant="text" slot="top" style="align-self: center;">加载更多</mdui-button>
         <div style="display: contents;">
@@ -51,7 +77,55 @@
         </div>
     </message-holder>
 
-    <script src="message-view.js"></script>
+    <mdui-top-app-bar
+        style="z-index: 100; bottom: 0; position: sticky; /* 好耶 是黏黏的胶水 想被胶水姐姐死死黏住不放~啊~(〃∇〃)姐姐好温柔~~suki♥️ */"
+        scroll-target="#right-contents" id="input_toolbar">
+        <mdui-text-field placeholder="(=・ω・=)" variant="outlined" autosize="autosize" id="input_message"
+            style="align-self: center; flex-grow: 1; max-height: 46px;">
+        </mdui-text-field>
+        <style>
+            #input_message::part(input) {
+                line-height: 15px;
+            }
+        </style>
+        <mdui-button-icon icon="send" id="send_message">
+        </mdui-button-icon>
+        <mdui-dropdown trigger="hover">
+            <mdui-button-icon icon="more_vert" slot="trigger">
+            </mdui-button-icon>
+            <mdui-menu>
+                <mdui-menu-item>插入图片<mdui-icon slot="icon" name="image">
+                    </mdui-icon>
+                </mdui-menu-item>
+                <mdui-menu-item>插入音频<mdui-icon slot="icon" name="keyboard_voice">
+                    </mdui-icon>
+                </mdui-menu-item>
+                <mdui-menu-item>插入文件<mdui-icon slot="icon" name="insert_drive_file">
+                    </mdui-icon>
+                </mdui-menu-item>
+                <mdui-menu-item>插入链接<mdui-icon slot="icon" name="link">
+                    </mdui-icon>
+                </mdui-menu-item>
+                <mdui-divider>
+                </mdui-divider>
+                <mdui-menu-item>插入名片<mdui-icon slot="icon" name="account_box">
+                    </mdui-icon>
+                </mdui-menu-item>
+                <mdui-divider>
+                </mdui-divider>
+                <mdui-menu-item>展开输入框<mdui-icon slot="icon" name="open_in_full">
+                    </mdui-icon>
+                </mdui-menu-item>
+            </mdui-menu>
+        </mdui-dropdown>
+    </mdui-top-app-bar>
+    <script>
+        windowOnResizingCallbacks.push((w, h) => {
+            $('#input_message').width(w - ($('#send_message').width() * 2 + 100))
+        })
+    </script>
+
+    <script type="module" src="message-view.js"></script>
 </body>
 
 </html>

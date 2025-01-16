@@ -5,23 +5,31 @@
             padding: 0 !important;
         }
 
-        #image-viewer-dialog>mdui-button-icon[icon=close] {
+        #image-viewer-dialog > mdui-button-icon[icon=close] {
             z-index: 114514;
             position: fixed;
             top: 15px;
             right: 15px;
         }
 
-        #image-viewer-dialog>mdui-button-icon[icon=download] {
+        #image-viewer-dialog > mdui-button-icon[icon=open_in_new] {
             z-index: 114514;
             position: fixed;
             top: 15px;
             right: 65px;
         }
+
+        #image-viewer-dialog > mdui-button-icon[icon=download] {
+            z-index: 114514;
+            position: fixed;
+            top: 15px;
+            right: 115px;
+        }
     </style>
     <mdui-dialog id="image-viewer-dialog" fullscreen="fullscreen">
-        <mdui-button-icon icon="download"
-            onclick="downloadFromUrl($('#image-viewer-dialog-inner > *').attr('src')).catch((e) => mdui.snackbar({message: '无法下载, 也许是被拒绝了吧?', closeOnOutsideClick: true}))">
+        <mdui-button-icon icon="download">
+        </mdui-button-icon>
+        <mdui-button-icon icon="open_in_new" onclick="window.open($('#image-viewer-dialog-inner > *').attr('src'), '_blank')">
         </mdui-button-icon>
         <mdui-button-icon icon="close" onclick="this.parentNode.open = false">
         </mdui-button-icon>
@@ -30,8 +38,11 @@
     </mdui-dialog>`))
 }
 
-export default function openImageViewerDialog(src) {
+export default function openImageViewerDialog(src, downloadCallback) {
     $('#image-viewer-dialog-inner').empty()
+
+    let _ = $('#image-viewer-dialog > mdui-button-icon[icon=download]')[downloadCallback ? 'show' : 'hide']()
+    if (downloadCallback) _.click(() => downloadCallback(src))
 
     let e = new Image()
     e.src = src
