@@ -28,8 +28,7 @@
 <body style="height: 100%;">
     <script src="auto-window-size.js"></script>
 
-    <mdui-top-app-bar style="position: fixed; top: 0;"
-        id="input_toolbar">
+    <mdui-top-app-bar style="position: fixed; top: 0;" id="input_toolbar">
         <mdui-button-icon icon="menu"></mdui-button-icon>
         <mdui-top-app-bar-title>院审</mdui-top-app-bar-title>
         <div style="flex-grow: 1">
@@ -125,7 +124,19 @@
         })
     </script>
 
-    <script type="module" src="message-view.js"></script>
+    <script type="module">
+        import {
+            MessageHolder,
+            MessageNormal,
+            MessageSystem,
+            MessageImg
+        } from './message-view.js'
+        import openImageViewerDialog from './image-viewer-dialog.js'
+
+        MessageImg.prototype.onImageClick = function(src) {
+            openImageViewerDialog(src)
+        }
+    </script>
 </body>
 
 </html>

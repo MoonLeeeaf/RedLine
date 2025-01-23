@@ -50,7 +50,9 @@ export default function openImageViewerDialog(src, downloadCallback) {
         $('#image-viewer-dialog-inner').empty()
         $('#image-viewer-dialog-inner').append($.parseHTML(`<mdui-icon name="broken_image" style="font-size: 2rem;"></mdui-icon>`))
     }
-    $('#image-viewer-dialog-inner').append(e)
+    $('#image-viewer-dialog-inner').append(e).click(function() {
+        if (this.id == 'image-viewer-dialog-inner') $('#image-viewer-dialog').get(0).open = false
+    })
 
     e.onload = () => $('#image-viewer-dialog-inner').get(0).setTransform({
         scale: 0.6,

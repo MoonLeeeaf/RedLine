@@ -1,5 +1,4 @@
 import loadTemplate from './template-loader.js'
-import openImageViewerDialog from './image-viewer-dialog.js'
 
 await loadTemplate('message-view-template')
 
@@ -10,12 +9,19 @@ class MessageNormal extends HTMLElement {
 
         const shadow = this.attachShadow({ mode: "open" })
     }
+    onHeadImageClick() {
+
+    }
     connectedCallback() {
         const shadow = this.shadowRoot
 
         shadow.appendChild($('#message-normal-template').get(0).content.cloneNode(true))
 
         $(shadow).find('#sender-name-left').hide()
+
+        $(shadow).find('#avatar').click(function() {
+            onHeadImageClick()
+        })
 
         this.update()
     }
@@ -101,13 +107,17 @@ customElements.define('message-normal', MessageNormal)
 customElements.define('message-system', MessageSystem)
 customElements.define('message-holder', MessageHolder)
 
-customElements.define('message-img', class extends HTMLElement {
+class MessageImg extends HTMLElement {
     constructor() {
         super()
     }
+    onImageClick() {
+
+    }
     connectedCallback() {
+        let self = this
         let e = new Image()
-        e.style.maxWidth = "100%"
+        e.style.maxWidth = "70%"
         e.style.maxHeight = "90%"
         e.style.marginTop = "13px"
         e.style.borderRadius = "var(--mdui-shape-corner-medium)"
@@ -118,8 +128,17 @@ customElements.define('message-img', class extends HTMLElement {
             $(this).attr('alt', '图像损坏')
         }
         e.onclick = () => {
-            openImageViewerDialog($(this).attr('src'))
+            self.onImageClick(e.src)
         }
         this.appendChild(e)
     }
-})
+}
+
+customElements.define('message-img', MessageImg)
+
+export {
+    MessageHolder,
+    MessageNormal,
+    MessageSystem,
+    MessageImg,
+}
